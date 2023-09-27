@@ -1,5 +1,6 @@
 package com.example.springboot.player;
 
+import com.example.springboot.Statistics.Statistics;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,20 +10,14 @@ import java.time.Period;
 @Table
 public class Player {
     @Id
-    @SequenceGenerator(
-            name = "player_sequence",
-            sequenceName = "player_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "player_sequence"
-    )
     private Long id;
     private String name;
     private PlayerPosition position;
     private double height;
-//    private PlayerStats stats;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id") // Use the same ID for Player and PlayerStats
+    private Statistics playerStatistics;
     private LocalDate dob;
     @Transient
     private int age;
@@ -31,6 +26,13 @@ public class Player {
 
     }
 
+    public Statistics getPlayerStatistics() {
+        return playerStatistics;
+    }
+
+    public void setPlayerStatistics(Statistics playerStatistics) {
+        this.playerStatistics = playerStatistics;
+    }
 
     public int getAge() {
         return Period.between(dob, LocalDate.now()).getYears();
@@ -47,15 +49,6 @@ public class Player {
         this.height = height;
         this.dob = dob;
     }
-
-//    public Player(Long id, String name, PlayerPosition position, double height, PlayerStats stats, LocalDate dob) {
-//        this.id = id;
-//        this.name = name;
-//        this.position = position;
-//        this.height = height;
-//        this.stats = stats;
-//        this.dob = dob;
-//    }
 
     public Player(String name, PlayerPosition position, double height, LocalDate dob) {
         this.name = name;
@@ -87,14 +80,6 @@ public class Player {
     public void setHeight(double height) {
         this.height = height;
     }
-
-//    public PlayerStats getStats() {
-//        return stats;
-//    }
-//
-//    public void setStats(PlayerStats stats) {
-//        this.stats = stats;
-//    }
 
     public Long getId() {
         return id;

@@ -55,4 +55,9 @@ public class PlayerService {
         }
     }
 
+    public Player getPlayerById(Long playerId) {
+        Player player = playerRepository.findById(playerId).
+                orElseThrow(()-> new IllegalStateException("player does not exist"));
+        return player;
+    }
 }
