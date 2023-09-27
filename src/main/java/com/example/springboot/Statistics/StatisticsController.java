@@ -1,5 +1,6 @@
 package com.example.springboot.Statistics;
 
+import com.example.springboot.player.Player;
 import com.example.springboot.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,9 @@ public class StatisticsController {
         this.playerService = playerService;
     }
 
-    @GetMapping(path = "{Id}")
-    public Statistics getStatistics(@PathVariable Long id){
-        return statisticsService.getStatisticsById(id);
+    @GetMapping(path = "{playerid}")
+    public Statistics getStatistics(@PathVariable Long playerid){
+        return statisticsService.getStatisticsById(playerid);
     }
 
     @GetMapping
@@ -29,20 +30,20 @@ public class StatisticsController {
         return statisticsService.getAllStatistics();
     }
 
-//    @PutMapping(path = "{Id}")
-//    public void addNewRow(@PathVariable Long id,
-//                          @RequestBody Statistics statistics){
-//
-//        // Check if the player with the provided ID exists
-//        Player player = playerService.
-//
-//        if (player == null) {
-//            return ResponseEntity.badRequest().body("Player with ID " + playerId + " does not exist.");
-//        }
-//
-//        // If the player exists, create the PlayerStats entity and associate it with the player
-//        playerStats.setPlayer(player);
-//        playerStatsService.save(playerStats);
-//    }
+    @PostMapping(path = "{playerid}")
+    public void addNewRow(@PathVariable Long playerid,
+                          @RequestBody Statistics statistics){
+        try {
+            System.out.println(statistics);
+            Player player = playerService.getPlayerById(playerid);
+
+            statistics.setPlayer(player);
+            statistics.setId(playerid);
+            statisticsService.addNewRow(statistics);
+
+        } catch (IllegalStateException ex) {
+            throw new IllegalStateException("id does not exist");
+        }
+    }
 
 }

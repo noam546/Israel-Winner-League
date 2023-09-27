@@ -25,4 +25,8 @@ public class StatisticsService {
     public List<Statistics> getAllStatistics() {
         return statisticsRepository.findAll();
     }
+
+    public void addNewRow(Statistics statistics) {
+        statisticsRepository.save(statistics);
+    }
 }

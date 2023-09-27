@@ -1,5 +1,6 @@
 package com.example.springboot.Statistics;
 import com.example.springboot.player.Player;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,10 +11,25 @@ public class Statistics {
     private double PPG;
     private double APG;
     private double SPG;
-
-    // Define the one-to-one relationship with Player
     @OneToOne(mappedBy = "playerStatistics")
+    @JsonBackReference
     private Player player;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public Statistics(){}
 
@@ -45,5 +61,15 @@ public class Statistics {
 
     public void setSPG(double SPG) {
         this.SPG = SPG;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "id=" + id +
+                ", PPG=" + PPG +
+                ", APG=" + APG +
+                ", SPG=" + SPG +
+                '}';
     }
 }

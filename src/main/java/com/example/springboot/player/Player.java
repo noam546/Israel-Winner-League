@@ -1,6 +1,7 @@
 package com.example.springboot.player;
 
 import com.example.springboot.Statistics.Statistics;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class Player {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id") // Use the same ID for Player and PlayerStats
+    @JsonManagedReference
     private Statistics playerStatistics;
     private LocalDate dob;
     @Transient
