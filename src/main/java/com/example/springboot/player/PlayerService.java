@@ -38,26 +38,34 @@ public class PlayerService {
 
     @Transactional
     public void updatePlayer(Long playerId,
-                             Player updatedPlayer) {
-        Player player = playerRepository.findById(playerId).
+                                  Player updatedPlayer) {
+        Player existingPlayer = playerRepository.findById(playerId).
                 orElseThrow(()-> new IllegalStateException("player does not exist"));
-        if(updatedPlayer.getName() != null){
-            player.setName(updatedPlayer.getName());
-        }
-        if(updatedPlayer.getPosition() != null){
-            player.setPosition(updatedPlayer.getPosition());
-        }
-        if(updatedPlayer.getHeight() != 0.0){
-            player.setHeight(updatedPlayer.getHeight());
-        }
-        if(updatedPlayer.getDob() != null){
-            player.setDob(updatedPlayer.getDob());
-        }
+        updatePlayerStats(existingPlayer, updatedPlayer);
     }
 
     public Player getPlayerById(Long playerId) {
         Player player = playerRepository.findById(playerId).
                 orElseThrow(()-> new IllegalStateException("player does not exist"));
         return player;
+    }
+
+    private void updatePlayerStats(Player existingPlayer, Player updatedPlayer){
+        if(updatedPlayer.getName() != null){
+            existingPlayer.setName(updatedPlayer.getName());
+        }
+        if(updatedPlayer.getPosition() != null){
+            existingPlayer.setPosition(updatedPlayer.getPosition());
+        }
+        if(updatedPlayer.getHeight() != 0.0){
+            existingPlayer.setHeight(updatedPlayer.getHeight());
+        }
+        if(updatedPlayer.getDob() != null){
+            existingPlayer.setDob(updatedPlayer.getDob());
+        }
+//        if(updatedPlayer.getPlayerStatistics() != null){
+//            existingPlayer.setPlayerStatistics(updatedPlayer.getPlayerStatistics());
+//        }
+
     }
 }

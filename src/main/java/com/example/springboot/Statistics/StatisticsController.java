@@ -30,18 +30,15 @@ public class StatisticsController {
         return statisticsService.getAllStatistics();
     }
 
-    @PostMapping(path = "{playerid}")
-    public void addNewRow(@PathVariable Long playerid,
+    @PostMapping(path = "{playerId}")
+    public void addNewRow(@PathVariable Long playerId,
                           @RequestBody Statistics statistics){
-        try {
-            Player player = playerService.getPlayerById(playerid);
-
-            statistics.setPlayer(player);
-            statistics.setId(playerid);
-
-        } catch (IllegalStateException ex) {
+        Player player = getPlayer(playerId);
+        if(player == null){
             throw new IllegalStateException("player does not exist");
         }
+        statistics.setPlayer(player);
+        statistics.setId(playerId);
         statisticsService.addNewRow(statistics);
     }
 
@@ -50,4 +47,18 @@ public class StatisticsController {
         statisticsService.deleteRow(playerId);
     }
 
+    @PutMapping(path = "{playerId}")
+    public void updateRow(@PathVariable Long playerId,
+                          @RequestBody Statistics statistics){
+        statisticsService.updateRow(playerId, statistics);
+    }
+
+    private Player getPlayer(Long playerId){
+        try {
+            Player player = playerService.getPlayerById(playerId);
+            return player;
+        } catch (IllegalStateException ex) {
+            return null;
+        }
+    }
 }
