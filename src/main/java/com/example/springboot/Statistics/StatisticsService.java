@@ -27,6 +27,16 @@ public class StatisticsService {
     }
 
     public void addNewRow(Statistics statistics) {
+        if(statisticsRepository.existsById(statistics.getId())){
+            throw new IllegalStateException("player stats already exists");
+        }
         statisticsRepository.save(statistics);
+    }
+
+    public void deleteRow(Long playerId) {
+        if(!statisticsRepository.existsById(playerId)){
+            throw new IllegalStateException("player stats does not exist");
+        }
+        statisticsRepository.deleteById(playerId);
     }
 }

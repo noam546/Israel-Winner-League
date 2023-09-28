@@ -34,16 +34,20 @@ public class StatisticsController {
     public void addNewRow(@PathVariable Long playerid,
                           @RequestBody Statistics statistics){
         try {
-            System.out.println(statistics);
             Player player = playerService.getPlayerById(playerid);
 
             statistics.setPlayer(player);
             statistics.setId(playerid);
-            statisticsService.addNewRow(statistics);
 
         } catch (IllegalStateException ex) {
-            throw new IllegalStateException("id does not exist");
+            throw new IllegalStateException("player does not exist");
         }
+        statisticsService.addNewRow(statistics);
+    }
+
+    @DeleteMapping(path = "{playerId}")
+    public void deleteRow(@PathVariable Long playerId){
+        statisticsService.deleteRow(playerId);
     }
 
 }

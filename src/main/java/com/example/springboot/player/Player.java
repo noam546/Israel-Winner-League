@@ -16,7 +16,7 @@ public class Player {
     private PlayerPosition position;
     private double height;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id") // Use the same ID for Player and PlayerStats
     @JsonManagedReference
     private Statistics playerStatistics;
