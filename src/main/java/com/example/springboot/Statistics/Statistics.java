@@ -8,16 +8,29 @@ import jakarta.persistence.*;
 public class Statistics {
     @Id
     private Long id;
+    //points per game
     private double PPG;
+    //assists per game
     private double APG;
+    //steals per game
     private double SPG;
+    //blocks per game
     private double BPG;
+    //rebounds per game
     private double RPG;
     //free throw percent
     private double FTpercent;
+    //field goal percent
     private double FGpercent;
+    //three points percent
     private double threesPercent;
+    //minutes per game
     private double MPG;
+    //games started
+    private int GS;
+    //games played
+    private int GP;
+
     @OneToOne(mappedBy = "playerStatistics")
     @JsonBackReference
     private Player player;
@@ -39,6 +52,7 @@ public class Statistics {
     }
 
     public Statistics(){}
+    public Statistics(Long id){this.id = id;}
 
     public Statistics(double PPG, double APG, double SPG) {
         this.PPG = PPG;
@@ -116,6 +130,22 @@ public class Statistics {
 
     public void setMPG(double MPG) {
         this.MPG = MPG;
+    }
+
+    public int getGS() {
+        return GS;
+    }
+
+    public void setGS(int GS) {
+        this.GS = GS;
+    }
+
+    public int getGP() {
+        return GP;
+    }
+
+    public void setGP(int GP) {
+        this.GP = GP;
     }
 
     @Override
