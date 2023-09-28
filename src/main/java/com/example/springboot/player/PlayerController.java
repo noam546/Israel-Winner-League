@@ -25,8 +25,9 @@ public class PlayerController {
         return playerService.getPlayerById(playerId);
     }
 
-    @PostMapping
-    public void addNewPlayer(@RequestBody Player player){
+    @PostMapping(path = "{playerId}")
+    public void addNewPlayer(@PathVariable Long playerId, @RequestBody Player player){
+        player.setId(playerId);
         playerService.addNewPlayer(player);
     }
 
