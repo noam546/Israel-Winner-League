@@ -16,14 +16,19 @@ public class PlayerService {
     }
 
     public List<Player> getAllPlayers(){
-        return playerRepository.findAll();
+        try{
+            return playerRepository.findAll();
+        }catch (Exception e){
+            throw new IllegalStateException("Error occurred while fetching teams", e);
+        }
     }
 
-    public void addNewPlayer(Player player){
-        Optional<Player> foundPlayer = playerRepository.findById(player.getId());
+    public void addNewPlayer(Long playerId, Player player){
+        Optional<Player> foundPlayer = playerRepository.findById(playerId);
         if(foundPlayer.isPresent()){
             throw new IllegalStateException("player exists");
         }
+        player.setId(playerId);
         playerRepository.save(player);
     }
 
@@ -45,9 +50,9 @@ public class PlayerService {
     }
 
     public Player getPlayerById(Long playerId) {
-        Player player = playerRepository.findById(playerId).
+        Player existingPlayer = playerRepository.findById(playerId).
                 orElseThrow(()-> new IllegalStateException("player does not exist"));
-        return player;
+        return existingPlayer;
     }
 
     private void updatePlayerStats(Player existingPlayer, Player updatedPlayer){

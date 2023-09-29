@@ -1,5 +1,7 @@
 package com.example.springboot.player;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -16,30 +18,58 @@ public class PlayerController {
     }
 
     @GetMapping
-    public List<Player> getAllPlayers(){
-        return playerService.getAllPlayers();
+    public ResponseEntity<List<Player>> getAllPlayers(){
+        try {
+            List<Player> players = playerService.getAllPlayers();
+            return ResponseEntity.ok(players);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping(path = "{playerId}")
-    public Player getPlayerById(@PathVariable Long playerId){
-        return playerService.getPlayerById(playerId);
+    public ResponseEntity<Player> getPlayerById(@PathVariable Long playerId){
+        try{
+            Player player = playerService.getPlayerById(playerId);
+            return ResponseEntity.ok(player);
+        }catch (IllegalStateException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping(path = "{playerId}")
-    public void addNewPlayer(@PathVariable Long playerId, @RequestBody Player player){
-        player.setId(playerId);
-        playerService.addNewPlayer(player);
+    public ResponseEntity<String> addNewPlayer(@PathVariable Long playerId, @RequestBody Player player){
+        try{
+            playerService.addNewPlayer(playerId, player);
+            return ResponseEntity.ok("Player created successfully");
+        }catch (IllegalStateException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Player already exists");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping(path = "{playerId}")
-    public void deletePlayer(@PathVariable Long playerId){
-        playerService.deletePlayer(playerId);
+    public ResponseEntity<?> deletePlayer(@PathVariable Long playerId){
+        try{
+            playerService.deletePlayer(playerId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }catch (IllegalStateException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PutMapping(path = "{playerId}")
-    public void updatePlayer(@PathVariable Long playerId,
-                             @RequestBody Player player){
-        playerService.updatePlayer(playerId, player);
+    public ResponseEntity<?> updatePlayer(@PathVariable Long playerId,
+                                               @RequestBody Player player){
+        try{
+            playerService.updatePlayer(playerId, player);
+            return ResponseEntity.status(HttpStatus.OK).body("Player was updated successfully");
+        }catch (IllegalStateException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 
