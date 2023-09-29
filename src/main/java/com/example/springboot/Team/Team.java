@@ -1,8 +1,11 @@
 package com.example.springboot.Team;
 
+import com.example.springboot.player.Player;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -15,6 +18,9 @@ public class Team {
     private String country;
 
     private String homeCourt;
+
+    @OneToMany(mappedBy = "currentTeam", cascade = CascadeType.ALL)
+    private Set<Player> players = new HashSet<>();
 
     public Team(){};
 
@@ -50,6 +56,14 @@ public class Team {
 
     public void setHomeCourt(String homeCourt) {
         this.homeCourt = homeCourt;
+    }
+
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }
 

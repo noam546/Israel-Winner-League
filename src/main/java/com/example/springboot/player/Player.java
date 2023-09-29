@@ -1,6 +1,7 @@
 package com.example.springboot.player;
 
 import com.example.springboot.Statistics.Statistics;
+import com.example.springboot.Team.Team;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -20,6 +21,12 @@ public class Player {
     @JoinColumn(name = "id") // Use the same ID for Player and PlayerStats
     @JsonManagedReference
     private Statistics playerStatistics;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "team_name", referencedColumnName = "name"),
+            @JoinColumn(name = "league_name", referencedColumnName = "leagueName")
+    })
+    private Team currentTeam;
     private LocalDate dob;
     @Transient
     private int age;
@@ -106,6 +113,14 @@ public class Player {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public Team getCurrentTeam() {
+        return currentTeam;
+    }
+
+    public void setCurrentTeam(Team currentTeam) {
+        this.currentTeam = currentTeam;
     }
 
     @Override

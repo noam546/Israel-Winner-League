@@ -71,5 +71,8 @@ public class PlayerService {
         if(updatedPlayer.getNationality() != null){
             existingPlayer.setNationality(updatedPlayer.getNationality());
         }
+        if(updatedPlayer.getCurrentTeam() != null){
+            existingPlayer.setCurrentTeam(updatedPlayer.getCurrentTeam());
+        }
     }
 }
