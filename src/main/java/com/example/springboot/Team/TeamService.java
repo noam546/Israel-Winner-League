@@ -15,4 +15,12 @@ public class TeamService {
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
+
+    public List<Team> getTeamByName(String teamName) {
+        List<Team> teams = teamRepository.findByKeyName(teamName);
+        if(teams.isEmpty()){
+            throw new IllegalStateException("team not found");
+        }
+        return teams;
+    }
 }

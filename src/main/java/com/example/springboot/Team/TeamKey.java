@@ -13,6 +13,11 @@ public class TeamKey implements Serializable {
     public TeamKey() {
     }
 
+    public TeamKey(String name, String leagueName){
+        this.name = name;
+        this.leagueName = leagueName;
+    }
+
     public String getName() {
         return name;
     }
