@@ -63,9 +63,8 @@ public class PlayerService {
         if(updatedPlayer.getDob() != null){
             existingPlayer.setDob(updatedPlayer.getDob());
         }
-//        if(updatedPlayer.getPlayerStatistics() != null){
-//            existingPlayer.setPlayerStatistics(updatedPlayer.getPlayerStatistics());
-//        }
-
+        if(updatedPlayer.getNationality() != null){
+            existingPlayer.setNationality(updatedPlayer.getNationality());
+        }
     }
 }

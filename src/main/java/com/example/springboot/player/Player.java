@@ -23,6 +23,7 @@ public class Player {
     private LocalDate dob;
     @Transient
     private int age;
+    private String nationality;
 
     public Player(){
 
@@ -97,6 +98,14 @@ public class Player {
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     @Override
