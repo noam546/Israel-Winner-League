@@ -1,13 +1,16 @@
 package com.example.springboot.Team;
 
 import jakarta.persistence.Embeddable;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 
 @Embeddable
 public class TeamKey implements Serializable {
 
+    @NonNull
     private String name;
+    @NonNull
     private String leagueName;
 
     public TeamKey() {

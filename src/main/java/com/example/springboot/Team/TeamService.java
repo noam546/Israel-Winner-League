@@ -23,4 +23,12 @@ public class TeamService {
         }
         return teams;
     }
+
+    public boolean createNewTeam(Team team) {
+        if(teamRepository.existsById(team.getKey())){
+            return false;
+        }
+        teamRepository.save(team);
+        return true;
+    }
 }
