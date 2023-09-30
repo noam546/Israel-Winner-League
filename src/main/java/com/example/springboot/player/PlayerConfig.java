@@ -21,8 +21,8 @@ public class PlayerConfig {
             Player alenOmic = new Player(2L,"alen omic",PlayerPosition.SF,2.00, LocalDate.of(1984, Month.MARCH,21));
             playerRepository.saveAll(List.of(TK,alenOmic));
 
-            Statistics stat1 = new Statistics(1L);
-            Statistics stat2 = new Statistics(2L);
+            PlayerStats stat1 = new PlayerStats(1L);
+            PlayerStats stat2 = new PlayerStats(2L);
             statisticsRepository.saveAll(List.of(stat1,stat2));
 
 

@@ -19,7 +19,7 @@ public class Player {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id") // Use the same ID for Player and PlayerStats
     @JsonManagedReference
-    private Statistics playerStatistics;
+    private PlayerStats stats;
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "team_name", referencedColumnName = "name"),
@@ -35,12 +35,12 @@ public class Player {
 
     }
 
-    public Statistics getPlayerStatistics() {
-        return playerStatistics;
+    public PlayerStats getPlayerStats() {
+        return stats;
     }
 
-    public void setPlayerStatistics(Statistics playerStatistics) {
-        this.playerStatistics = playerStatistics;
+    public void setPlayerStats(PlayerStats playerPlayerStats) {
+        this.stats = playerPlayerStats;
     }
 
     public int getAge() {

@@ -80,9 +80,9 @@ public class PlayerController {
 
     ///////////  stats
     @GetMapping(path = "{playerid}/stats")
-    public ResponseEntity<Statistics> getStatistics(@PathVariable Long playerid){
+    public ResponseEntity<PlayerStats> getStatistics(@PathVariable Long playerid){
         try{
-            Statistics stats = playerService.getStatisticsById(playerid);
+            PlayerStats stats = playerService.getStatisticsById(playerid);
             return ResponseEntity.status(HttpStatus.OK).body(stats);
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -91,11 +91,11 @@ public class PlayerController {
 
     @PostMapping(path = "{playerId}/stats")
     public ResponseEntity<String> addNewRow(@PathVariable Long playerId,
-                          @RequestBody Statistics statistics){
+                          @RequestBody PlayerStats playerStats){
         try{
             System.out.println("arrived  ");
 
-            playerService.addNewRow(playerId, statistics);
+            playerService.addNewRow(playerId, playerStats);
             return ResponseEntity.ok().body("Player stats was created successfully");
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -120,9 +120,9 @@ public class PlayerController {
 
     @PutMapping(path = "{playerId}/stats")
     public ResponseEntity<?> updateRow(@PathVariable Long playerId,
-                          @RequestBody Statistics statistics){
+                          @RequestBody PlayerStats playerStats){
         try{
-            playerService.updateRow(playerId, statistics);
+            playerService.updateRow(playerId, playerStats);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

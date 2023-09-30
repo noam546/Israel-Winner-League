@@ -1,11 +1,10 @@
 package com.example.springboot.player;
-import com.example.springboot.player.Player;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Statistics {
+public class PlayerStats {
     @Id
     private Long id;
     //points per game
@@ -31,7 +30,7 @@ public class Statistics {
     //games played
     private int GP;
 
-    @OneToOne(mappedBy = "playerStatistics")
+    @OneToOne(mappedBy = "stats")
     @JsonBackReference
     private Player player;
 
@@ -51,10 +50,10 @@ public class Statistics {
         this.player = player;
     }
 
-    public Statistics(){}
-    public Statistics(Long id){this.id = id;}
+    public PlayerStats(){}
+    public PlayerStats(Long id){this.id = id;}
 
-    public Statistics(double PPG, double APG, double SPG) {
+    public PlayerStats(double PPG, double APG, double SPG) {
         this.PPG = PPG;
         this.APG = APG;
         this.SPG = SPG;

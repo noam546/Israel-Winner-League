@@ -55,13 +55,13 @@ public class PlayerService {
         }
     }
 
-    private boolean validatePlayerStatsAndSetIt(Player player, Statistics stats){
+    private boolean validatePlayerStatsAndSetIt(Player player, PlayerStats stats){
         try{
-            Statistics existingStats = statisticsRepository.findById(stats.getId()).
+            PlayerStats existingStats = statisticsRepository.findById(stats.getId()).
                     orElseThrow(
                     ()-> new IllegalArgumentException("Player was not found")
             );
-            player.setPlayerStatistics(existingStats);
+            player.setPlayerStats(existingStats);
             return true;
         }catch (Exception e){
             return false;
@@ -110,8 +110,8 @@ public class PlayerService {
                 throw new IllegalArgumentException("Team does not exist");
             }
         }
-        if(updatedPlayer.getPlayerStatistics() != null){
-            if(!validatePlayerStatsAndSetIt(existingPlayer,updatedPlayer.getPlayerStatistics())){
+        if(updatedPlayer.getPlayerStats() != null){
+            if(!validatePlayerStatsAndSetIt(existingPlayer,updatedPlayer.getPlayerStats())){
                 throw new IllegalArgumentException("Stats do not exist");
             }
         }
@@ -119,13 +119,13 @@ public class PlayerService {
 
     ////////// Stats
 
-    public Statistics getStatisticsById(Long id) {
+    public PlayerStats getStatisticsById(Long id) {
         return statisticsRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("Player was not found")
         );
     }
 
-    public void addNewRow(Long playerId, Statistics statistics) {
+    public void addNewRow(Long playerId, PlayerStats playerStats) {
         Player player = playerRepository.findById(playerId).orElseThrow(
                 ()-> new IllegalArgumentException("Player was not found")
         );
@@ -136,12 +136,12 @@ public class PlayerService {
         }
         System.out.println("passed stats not found");
 
-        statistics.setPlayer(player);
+        playerStats.setPlayer(player);
         System.out.println("passed set player");
 
-        statistics.setId(playerId);
+        playerStats.setId(playerId);
         System.out.println("passed ");
-        statisticsRepository.save(statistics);
+        statisticsRepository.save(playerStats);
     }
 
     public void deleteRow(Long playerId) {
@@ -152,14 +152,14 @@ public class PlayerService {
     }
 
     @Transactional
-    public void updateRow(Long id, Statistics updatedStats) {
-        Statistics existingStats = statisticsRepository.findById(id).orElseThrow(
+    public void updateRow(Long id, PlayerStats updatedStats) {
+        PlayerStats existingStats = statisticsRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("Player's stats does not exist")
         );
         updateRowValues(existingStats, updatedStats);
     }
 
-    private void updateRowValues(Statistics existingStats, Statistics updatedStats){
+    private void updateRowValues(PlayerStats existingStats, PlayerStats updatedStats){
         if (!Double.isNaN(updatedStats.getPPG())) {
             existingStats.setPPG(updatedStats.getPPG());
         }
