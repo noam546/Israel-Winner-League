@@ -12,14 +12,14 @@ import java.util.List;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    private final StatisticsRepository statisticsRepository;
+    private final playerStatsRepository playerStatsRepository;
     private final TeamService teamService;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository, TeamService teamService, StatisticsRepository statisticsRepository) {
+    public PlayerService(PlayerRepository playerRepository, TeamService teamService, playerStatsRepository playerStatsRepository) {
         this.playerRepository = playerRepository;
         this.teamService = teamService;
-        this.statisticsRepository = statisticsRepository;
+        this.playerStatsRepository = playerStatsRepository;
     }
 
     public List<Player> getAllPlayers(){
@@ -60,7 +60,7 @@ public class PlayerService {
 
     private boolean validatePlayerStatsAndSetIt(Player player, PlayerStats stats){
         try{
-            PlayerStats existingStats = statisticsRepository.findById(stats.getId()).
+            PlayerStats existingStats = playerStatsRepository.findById(stats.getId()).
                     orElseThrow(
                     ()-> new IllegalArgumentException("Player was not found")
             );
@@ -123,7 +123,7 @@ public class PlayerService {
     ////////// Stats
 
     public PlayerStats getStatisticsById(Long id) {
-        return statisticsRepository.findById(id).orElseThrow(
+        return playerStatsRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("Player was not found")
         );
     }
@@ -133,25 +133,25 @@ public class PlayerService {
                 ()-> new IllegalArgumentException("Player was not found")
         );
 
-        if(statisticsRepository.existsById(playerId)){
+        if(playerStatsRepository.existsById(playerId)){
             throw new InputMismatchException("Player stats already exists");
         }
 
         playerStats.setPlayer(player);
         playerStats.setId(playerId);
-        statisticsRepository.save(playerStats);
+        playerStatsRepository.save(playerStats);
     }
 
     public void deleteRow(Long playerId) {
-        if(!statisticsRepository.existsById(playerId)){
+        if(!playerStatsRepository.existsById(playerId)){
             throw new IllegalArgumentException("player stats does not exist");
         }
-        statisticsRepository.deleteById(playerId);
+        playerStatsRepository.deleteById(playerId);
     }
 
     @Transactional
     public void updateRow(Long id, PlayerStats updatedStats) {
-        PlayerStats existingStats = statisticsRepository.findById(id).orElseThrow(
+        PlayerStats existingStats = playerStatsRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("Player's stats does not exist")
         );
         updateRowValues(existingStats, updatedStats);

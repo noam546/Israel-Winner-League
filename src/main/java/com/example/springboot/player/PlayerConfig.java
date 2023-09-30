@@ -14,7 +14,7 @@ import java.util.List;
 public class PlayerConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(PlayerRepository playerRepository, StatisticsRepository statisticsRepository, TeamRepository teamRepository){
+    CommandLineRunner commandLineRunner(PlayerRepository playerRepository, playerStatsRepository playerStatsRepository, TeamRepository teamRepository){
         return args -> {
             Player TK = new Player(1L,"Tarence Anthony Kinsey",PlayerPosition.SF,2.00, LocalDate.of(1984, Month.MARCH,21));
             Player alenOmic = new Player(2L,"alen omic",PlayerPosition.SF,2.00, LocalDate.of(1984, Month.MARCH,21));
@@ -22,7 +22,7 @@ public class PlayerConfig {
 
             PlayerStats stat1 = new PlayerStats(1L);
             PlayerStats stat2 = new PlayerStats(2L);
-            statisticsRepository.saveAll(List.of(stat1,stat2));
+            playerStatsRepository.saveAll(List.of(stat1,stat2));
 
             Team team1 = new Team("Hapoel Jerusalem");
             Team team2 = new Team("Maccabi Tel Aviv");
