@@ -1,4 +1,4 @@
-package com.example.springboot.Statistics;
+package com.example.springboot.player;
 import com.example.springboot.player.Player;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

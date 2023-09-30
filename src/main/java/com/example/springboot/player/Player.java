@@ -1,6 +1,5 @@
 package com.example.springboot.player;
 
-import com.example.springboot.Statistics.Statistics;
 import com.example.springboot.Team.Team;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

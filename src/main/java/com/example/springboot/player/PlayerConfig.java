@@ -1,7 +1,5 @@
 package com.example.springboot.player;
 
-import com.example.springboot.Statistics.Statistics;
-import com.example.springboot.Statistics.StatisticsRepository;
 import com.example.springboot.Team.Team;
 import com.example.springboot.Team.TeamKey;
 import com.example.springboot.Team.TeamRepository;

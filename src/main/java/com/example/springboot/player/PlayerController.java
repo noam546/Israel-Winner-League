@@ -78,5 +78,58 @@ public class PlayerController {
         }
     }
 
+    ///////////  stats
+    @GetMapping(path = "{playerid}/stats")
+    public ResponseEntity<Statistics> getStatistics(@PathVariable Long playerid){
+        try{
+            Statistics stats = playerService.getStatisticsById(playerid);
+            return ResponseEntity.status(HttpStatus.OK).body(stats);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping(path = "{playerId}/stats")
+    public ResponseEntity<String> addNewRow(@PathVariable Long playerId,
+                          @RequestBody Statistics statistics){
+        try{
+            System.out.println("arrived  ");
+
+            playerService.addNewRow(playerId, statistics);
+            return ResponseEntity.ok().body("Player stats was created successfully");
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (InputMismatchException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping(path = "{playerId}/stats")
+    public ResponseEntity<?> deleteRow(@PathVariable Long playerId){
+        try{
+            playerService.deleteRow(playerId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping(path = "{playerId}/stats")
+    public ResponseEntity<?> updateRow(@PathVariable Long playerId,
+                          @RequestBody Statistics statistics){
+        try{
+            playerService.updateRow(playerId, statistics);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 }
