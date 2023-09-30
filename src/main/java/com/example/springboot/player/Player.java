@@ -1,6 +1,8 @@
 package com.example.springboot.player;
 
 import com.example.springboot.Team.Team;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -22,6 +24,7 @@ public class Player {
     private PlayerStats stats;
     @ManyToOne
     @JoinColumn(name = "team_name", referencedColumnName = "name")
+    @JsonIgnoreProperties("players")
     private Team currentTeam;
     private LocalDate dob;
     @Transient

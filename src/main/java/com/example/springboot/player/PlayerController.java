@@ -93,7 +93,6 @@ public class PlayerController {
     public ResponseEntity<String> addNewRow(@PathVariable Long playerId,
                           @RequestBody PlayerStats playerStats){
         try{
-            System.out.println("arrived  ");
 
             playerService.addNewRow(playerId, playerStats);
             return ResponseEntity.ok().body("Player stats was created successfully");

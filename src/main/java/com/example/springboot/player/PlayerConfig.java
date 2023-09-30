@@ -1,7 +1,6 @@
 package com.example.springboot.player;
 
 import com.example.springboot.Team.Team;
-import com.example.springboot.Team.TeamKey;
 import com.example.springboot.Team.TeamRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

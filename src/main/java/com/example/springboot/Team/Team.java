@@ -1,6 +1,7 @@
 package com.example.springboot.Team;
 
 import com.example.springboot.player.Player;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,8 +11,6 @@ import java.util.Set;
 @Entity
 @Table
 public class Team {
-//    @EmbeddedId
-//    private TeamKey key;
     @Id
     private String name;
     private LocalDate foundationDate;
@@ -21,6 +20,7 @@ public class Team {
     private String homeCourt;
 
     @OneToMany(mappedBy = "currentTeam", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("currentTeam")
     private Set<Player> players = new HashSet<>();
 
     public Team(){};

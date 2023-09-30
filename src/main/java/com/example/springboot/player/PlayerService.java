@@ -34,7 +34,7 @@ public class PlayerService {
         if(playerRepository.existsById(playerId)){
             throw new IllegalArgumentException("player already exists");
         }
-
+        System.out.println(player.getCurrentTeam());
         if(player.getCurrentTeam() != null){
             if(!validateCurrentTeamAndSetIt(player,player.getCurrentTeam())){
                 throw new InputMismatchException("Team does not exist");
@@ -46,9 +46,12 @@ public class PlayerService {
     }
 
     private boolean validateCurrentTeamAndSetIt(Player player, Team team){
+        System.out.println("inside validate");
         try{
             Team existingTeam = teamService.getTeamByName(team.getName());
+            System.out.println("after found team");
             player.setCurrentTeam(existingTeam);
+            System.out.println("after set team");
             return true;
         }catch (IllegalStateException e){
             return false;
@@ -129,18 +132,13 @@ public class PlayerService {
         Player player = playerRepository.findById(playerId).orElseThrow(
                 ()-> new IllegalArgumentException("Player was not found")
         );
-        System.out.println("passed player is found");
 
         if(statisticsRepository.existsById(playerId)){
             throw new InputMismatchException("Player stats already exists");
         }
-        System.out.println("passed stats not found");
 
         playerStats.setPlayer(player);
-        System.out.println("passed set player");
-
         playerStats.setId(playerId);
-        System.out.println("passed ");
         statisticsRepository.save(playerStats);
     }
 
