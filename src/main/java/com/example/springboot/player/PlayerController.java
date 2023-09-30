@@ -40,12 +40,14 @@ public class PlayerController {
     }
 
     @PostMapping(path = "{playerId}")
-    public ResponseEntity<String> addNewPlayer(@PathVariable Long playerId, @RequestBody Player player){
+    public ResponseEntity<String> createNewPlayer(@PathVariable Long playerId, @RequestBody Player player){
         try{
-            playerService.addNewPlayer(playerId, player);
+            playerService.createNewPlayer(playerId, player);
             return ResponseEntity.ok("Player created successfully");
-        }catch (IllegalStateException e){
+        }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Player already exists");
+        }catch (InputMismatchException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -56,19 +58,23 @@ public class PlayerController {
         try{
             playerService.deletePlayer(playerId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch (IllegalStateException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping(path = "{playerId}")
-    public ResponseEntity<?> updatePlayer(@PathVariable Long playerId,
+    public ResponseEntity<String> updatePlayer(@PathVariable Long playerId,
                                                @RequestBody Player player){
         try{
             playerService.updatePlayer(playerId, player);
             return ResponseEntity.status(HttpStatus.OK).body("Player was updated successfully");
-        }catch (IllegalStateException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

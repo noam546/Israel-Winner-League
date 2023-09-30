@@ -24,11 +24,22 @@ public class TeamService {
         return teams;
     }
 
+    public Team getTeamByKey(TeamKey key){
+        return teamRepository.findById(key).orElseThrow(
+                ()-> new IllegalStateException("Team does not exist")
+        );
+    }
+
     public boolean createNewTeam(Team team) {
-        if(teamRepository.existsById(team.getKey())){
+        if(isTeamExist(team)){
             return false;
         }
         teamRepository.save(team);
         return true;
     }
+
+    public boolean isTeamExist(Team team){
+        return teamRepository.existsById(team.getKey());
+    }
+
 }
