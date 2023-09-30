@@ -5,12 +5,12 @@ import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 
-@Embeddable
+//@Embeddable
 public class TeamKey implements Serializable {
 
-    @NonNull
+//    @NonNull
     private String name;
-    @NonNull
+//    @NonNull
     private String leagueName;
 
     public TeamKey() {

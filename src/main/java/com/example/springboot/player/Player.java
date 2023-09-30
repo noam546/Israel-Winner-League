@@ -21,10 +21,7 @@ public class Player {
     @JsonManagedReference
     private PlayerStats stats;
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "team_name", referencedColumnName = "name"),
-            @JoinColumn(name = "league_name", referencedColumnName = "leagueName")
-    })
+    @JoinColumn(name = "team_name", referencedColumnName = "name")
     private Team currentTeam;
     private LocalDate dob;
     @Transient

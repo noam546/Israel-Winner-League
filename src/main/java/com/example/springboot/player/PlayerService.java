@@ -47,7 +47,7 @@ public class PlayerService {
 
     private boolean validateCurrentTeamAndSetIt(Player player, Team team){
         try{
-            Team existingTeam = teamService.getTeamByKey(team.getKey());
+            Team existingTeam = teamService.getTeamByName(team.getName());
             player.setCurrentTeam(existingTeam);
             return true;
         }catch (IllegalStateException e){

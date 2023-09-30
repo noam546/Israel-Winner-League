@@ -10,9 +10,10 @@ import java.util.Set;
 @Entity
 @Table
 public class Team {
-    @EmbeddedId
-    private TeamKey key;
-
+//    @EmbeddedId
+//    private TeamKey key;
+    @Id
+    private String name;
     private LocalDate foundationDate;
 
     private String country;
@@ -24,15 +25,19 @@ public class Team {
 
     public Team(){};
 
-    public Team(TeamKey key){this.key = key;}
-
-    public TeamKey getKey() {
-        return key;
+    public Team(String name){
+        this.name = name;
     }
 
-    public void setKey(TeamKey key) {
-        this.key = key;
-    }
+//    public Team(TeamKey key){this.key = key;}
+//
+//    public TeamKey getKey() {
+//        return key;
+//    }
+//
+//    public void setKey(TeamKey key) {
+//        this.key = key;
+//    }
 
     public LocalDate getFoundationDate() {
         return foundationDate;
@@ -64,6 +69,14 @@ public class Team {
 
     public void setPlayers(Set<Player> players) {
         this.players = players;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

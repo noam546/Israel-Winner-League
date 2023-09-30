@@ -25,9 +25,8 @@ public class PlayerConfig {
             PlayerStats stat2 = new PlayerStats(2L);
             statisticsRepository.saveAll(List.of(stat1,stat2));
 
-
-            Team team1 = new Team(new TeamKey("Hapoel Jerusalem","Winner League"));
-            Team team2 = new Team(new TeamKey("Maccabi Tel Aviv","Winner League"));
+            Team team1 = new Team("Hapoel Jerusalem");
+            Team team2 = new Team("Maccabi Tel Aviv");
             teamRepository.saveAll(List.of(team1,team2));
         };
     }

@@ -16,30 +16,19 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public List<Team> getTeamByName(String teamName) {
-        List<Team> teams = teamRepository.findByKeyName(teamName);
-        if(teams.isEmpty()){
-            throw new IllegalStateException("team not found");
-        }
-        return teams;
-    }
-
-    public Team getTeamByKey(TeamKey key){
-        return teamRepository.findById(key).orElseThrow(
-                ()-> new IllegalStateException("Team does not exist")
+    public Team getTeamByName(String teamName) {
+        return teamRepository.findById(teamName).orElseThrow(
+                ()-> new IllegalArgumentException("Team was not found")
         );
     }
 
-    public boolean createNewTeam(Team team) {
-        if(isTeamExist(team)){
-            return false;
+    public void createNewTeam(String teamName, Team team) {
+        if(teamRepository.existsById(teamName)){
+            throw new IllegalArgumentException("Team already exists");
         }
+        team.setName(teamName);
         teamRepository.save(team);
-        return true;
     }
 
-    public boolean isTeamExist(Team team){
-        return teamRepository.existsById(team.getKey());
-    }
 
 }

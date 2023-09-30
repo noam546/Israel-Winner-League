@@ -28,35 +28,27 @@ public class TeamController {
     }
 
     @GetMapping(path = "{teamName}")
-    public ResponseEntity<List<Team>> getTeamByName(@PathVariable String teamName){
-        List<Team> teamList = teamService.getTeamByName(teamName);
-        if(teamList == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.status(200).body(teamList);
-    }
-
-    @PostMapping
-    public ResponseEntity<String> createNewTeam(@RequestBody Team team){
-        if(!isValidRequest(team.getKey())){
-            return ResponseEntity.badRequest().
-                    body("Team name and league name are required");
-        }
-        if (teamService.createNewTeam(team)) {
-            return ResponseEntity.status(201).
-                    body("Team created successfully"); // 201 Created
-        } else {
-            return ResponseEntity.status(409).
-                    body("Team already exists"); // 409 Conflict
+    public ResponseEntity<Team> getTeamByName(@PathVariable String teamName){
+        try{
+            Team team = teamService.getTeamByName(teamName);
+            return ResponseEntity.status(HttpStatus.OK).body(team);
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    private boolean isValidRequest(TeamKey key){
-        if(key == null ||
-                key.getName() == null ||
-                key.getLeagueName() == null){
-            return false;
+    @PostMapping(path = "{teamName}")
+    public ResponseEntity<String> createNewTeam(@PathVariable String teamName, @RequestBody Team team){
+        try{
+            teamService.createNewTeam(teamName,team);
+            return ResponseEntity.ok().body("Team was created successfully");
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return true;
     }
+
 }
