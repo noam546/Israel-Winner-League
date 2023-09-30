@@ -29,16 +29,6 @@ public class Team {
         this.name = name;
     }
 
-//    public Team(TeamKey key){this.key = key;}
-//
-//    public TeamKey getKey() {
-//        return key;
-//    }
-//
-//    public void setKey(TeamKey key) {
-//        this.key = key;
-//    }
-
     public LocalDate getFoundationDate() {
         return foundationDate;
     }

@@ -81,7 +81,7 @@ public class PlayerService {
                                   Player updatedPlayer) {
         Player existingPlayer = playerRepository.findById(playerId).
                 orElseThrow(()-> new IllegalArgumentException("player does not exist"));
-        updatePlayerStats(existingPlayer, updatedPlayer);
+        updatePlayerDetails(existingPlayer, updatedPlayer);
     }
 
     public Player getPlayerById(Long playerId) {
@@ -89,7 +89,7 @@ public class PlayerService {
                 orElseThrow(()-> new IllegalStateException("player does not exist"));
     }
 
-    private void updatePlayerStats(Player existingPlayer, Player updatedPlayer){
+    private void updatePlayerDetails(Player existingPlayer, Player updatedPlayer){
         if(updatedPlayer.getName() != null){
             existingPlayer.setName(updatedPlayer.getName());
         }
